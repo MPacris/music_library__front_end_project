@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 
 function App() {
+
+
+  useEffect(() => {
+    makeGetRequest();
+  },[])
+
+  async function makeGetRequest(){
+    try{
+    let response = await axios.get('http://127.0.0.1:5000/api/songs');
+    console.log(response.data);
+  } catch (ex) {
+    console.log('Error in makeGetRequest API call!');
+  }
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h3>Async Await Axios Example</h3>
+      <button onClick={makeGetRequest}>Remake Await Request</button>
     </div>
-  );
+);
 }
+
 
 export default App;
