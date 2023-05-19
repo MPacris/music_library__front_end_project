@@ -36,6 +36,7 @@ function AddSongForm({ onAddSong }) {
 
   return (
     <form onSubmit={handleSubmit} className='add-song-form'>
+      <h3>Add Song</h3>
       <input
         type="text"
         placeholder="Title"

@@ -34,7 +34,7 @@ function App() {
         song.artist.toLowerCase().includes(searchTerm) ||
         song.genre.toLowerCase().includes(searchTerm) ||
         song.release_date.toLowerCase().includes(searchTerm) ||
-        song.running_time.toLowerCase().includes(searchTerm)
+        (typeof song.running_time === 'string' && song.running_time.toLowerCase().includes(searchTerm))
       );
     });
     setFilteredSongs(filtered);

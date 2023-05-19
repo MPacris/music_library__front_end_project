@@ -12,6 +12,7 @@ function Filter({ onFilter }) {
 
   return (
     <form onSubmit={handleSubmit} className='filter-section'>
+      <h3>Filter</h3>
       <select value={filterType} onChange={(event) => setFilterType(event.target.value)}>
         <option value="">Select Filter Type</option>
         <option value="album">Album</option>

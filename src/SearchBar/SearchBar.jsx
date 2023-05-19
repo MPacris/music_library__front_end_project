@@ -11,6 +11,7 @@ function SearchBar({ onSearch }) {
 
   return (
     <form onSubmit={handleSubmit} className='search-bar-sectioon'>
+      <h3>SearchBar</h3>
       <input
         type="text"
         placeholder="Search..."
