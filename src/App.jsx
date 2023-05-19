@@ -4,6 +4,7 @@ import MusicTable from './MusicTable/MusicTable';
 import SearchBar from './SearchBar/SearchBar';
 import Filter from './Filter/Filter';
 import AddSongForm from './AddSongForm/AddSongForm';
+import './App.css'
 
 function App() {
   const [songs, setSongs] = useState([]);
@@ -71,13 +72,30 @@ function App() {
   }
 
   return (
-    <div>
+    <div className='container-all'>
       <h3>Music Library</h3>
+
+    <div className='action-container'>
+      <div className='search-bar' >
       <SearchBar onSearch={handleSearch} />
+      </div>
+
+      <div className='filter-section'>
       <Filter onFilter={handleFilter} />
-      <MusicTable songs={filteredSongs} />
+      </div>
+
+      <div className='add-song-form' >
       <AddSongForm onAddSong={addSong} />
+      </div>
     </div>
+
+    
+
+      <div className='table-container'>
+      <MusicTable songs={filteredSongs} />
+      </div>
+    </div>
+   
   );
 }
 
