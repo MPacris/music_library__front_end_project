@@ -3,6 +3,8 @@ import './MusicTable.css';
 
 function MusicTable({ songs }) {
   return (
+    <div className='bottom-container'>
+      <h3>Music Library</h3>
     <table className="music-table">
       <thead>
         <tr>
@@ -29,6 +31,7 @@ function MusicTable({ songs }) {
         ))}
       </tbody>
     </table>
+    </div>
   );
 }
 
