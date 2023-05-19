@@ -64,7 +64,7 @@ function App() {
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/songs', songData);
       setSongs([...songs, response.data.song]);
-      setFilteredSongs([...filteredSongs, response.data.song]);
+      setFilteredSongs([...filteredSongs, response.data.song]);  //put in so that if I was filtering I can still add from that page
     } catch (ex) {
       console.log('Error in addSong API call!');
     }

@@ -47,7 +47,7 @@ function AddSongForm({ onAddSong }) {
         placeholder="Album"
         value={album}
         onChange={(event) => setAlbum(event.target.value)}
-        required
+      
       />
       <input
         type="text"
@@ -61,7 +61,7 @@ function AddSongForm({ onAddSong }) {
         placeholder="Genre"
         value={genre}
         onChange={(event) => setGenre(event.target.value)}
-        required
+        
       />
       <input
         type="text"
@@ -69,14 +69,14 @@ function AddSongForm({ onAddSong }) {
         pattern="\d{4}-\d{2}-\d{2}"
         value={releaseDate}
         onChange={(event) => setReleaseDate(event.target.value)}
-        required
+        
       />
       <input
         type="text"
         placeholder="Running Time"
         value={runningTime}
         onChange={(event) => setRunningTime(event.target.value)}
-        required
+        
       />
       <button type="submit">Add Song</button>
     </form>
