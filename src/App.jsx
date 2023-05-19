@@ -3,6 +3,7 @@ import axios from 'axios';
 import MusicTable from './MusicTable/MusicTable';
 import SearchBar from './SearchBar/SearchBar';
 import Filter from './Filter/Filter';
+import AddSongForm from './AddSongForm/AddSongForm';
 
 function App() {
   const [songs, setSongs] = useState([]);
@@ -30,7 +31,8 @@ function App() {
         song.album.toLowerCase().includes(searchTerm) ||
         song.artist.toLowerCase().includes(searchTerm) ||
         song.genre.toLowerCase().includes(searchTerm) ||
-        song.release_date.toLowerCase().includes(searchTerm)
+        song.release_date.toLowerCase().includes(searchTerm) ||
+        song.running_time.toLowerCase().includes(searchTerm)
       );
     });
     setFilteredSongs(filtered);
@@ -39,22 +41,33 @@ function App() {
   function handleFilter(filterType, filterValue) {
     const filtered = songs.filter((song) => {
       const lowerCaseFilterValue = filterValue.toLowerCase();
-      switch (filterType) {
-        case 'album':
-          return song.album.toLowerCase().includes(lowerCaseFilterValue);
-        case 'artist':
-          return song.artist.toLowerCase().includes(lowerCaseFilterValue);
-        case 'genre':
-          return song.genre.toLowerCase().includes(lowerCaseFilterValue);
-        case 'releaseDate':
-          return song.release_date.toLowerCase().includes(lowerCaseFilterValue);
-        case 'title':
-          return song.title.toLowerCase().includes(lowerCaseFilterValue);
-        default:
-          return true;
+      const filterChoices = {
+        album: song.album.toLowerCase(),
+        artist: song.artist.toLowerCase(),
+        genre: song.genre.toLowerCase(),
+        releaseDate: song.release_date.toLowerCase(),
+        runningTime: song.running_time.toString(),
+        title: song.title.toLowerCase()
+      };
+  
+      if (filterType in filterChoices) {
+        return filterChoices[filterType].includes(lowerCaseFilterValue);
+      } else {
+        return true;
       }
     });
+  
     setFilteredSongs(filtered);
+  }
+
+  async function addSong(songData) {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/api/songs', songData);
+      setSongs([...songs, response.data.song]);
+      setFilteredSongs([...filteredSongs, response.data.song]);
+    } catch (ex) {
+      console.log('Error in addSong API call!');
+    }
   }
 
   return (
@@ -63,6 +76,7 @@ function App() {
       <SearchBar onSearch={handleSearch} />
       <Filter onFilter={handleFilter} />
       <MusicTable songs={filteredSongs} />
+      <AddSongForm onAddSong={addSong} />
     </div>
   );
 }
