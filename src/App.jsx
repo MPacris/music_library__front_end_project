@@ -5,6 +5,7 @@ import SearchBar from './SearchBar/SearchBar';
 import Filter from './Filter/Filter';
 import AddSongForm from './AddSongForm/AddSongForm';
 import './App.css'
+import './MusicTable/MusicTable.css'
 
 function App() {
   const [songs, setSongs] = useState([]);
@@ -73,9 +74,10 @@ function App() {
 
   return (
     <div className='container-all'>
-      <h3>Music Library</h3>
+      <h1 className='header'>Music Library</h1>
 
     <div className='action-container'>
+
       <div className='search-bar' >
       <SearchBar onSearch={handleSearch} />
       </div>

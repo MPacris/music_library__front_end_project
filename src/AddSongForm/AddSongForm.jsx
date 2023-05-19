@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './AddSongForm.css'
 
 function AddSongForm({ onAddSong }) {
   const [title, setTitle] = useState('');
@@ -34,7 +35,7 @@ function AddSongForm({ onAddSong }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='add-song-form'>
       <input
         type="text"
         placeholder="Title"

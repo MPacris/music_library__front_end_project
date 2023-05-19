@@ -1,9 +1,41 @@
+First Iteration-Diplaying in Table
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import MusicTable from './MusicTable/MusicTable';
+
+function App() {
+  const [songs, setSongs] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/songs');
+      setSongs(response.data.songs);
+    } catch (ex) {
+      console.log('Error in fetchData API call!');
+    }
+  }
+
+  return (
+    <div>
+      <h3>Music Library</h3>
+      <MusicTable songs={songs} />
+    </div>
+  );
+}
+
+export default App;
+
 import React from 'react';
-import './MusicTable.css';
 
 function MusicTable({ songs }) {
   return (
-    <table className="music-table">
+    <table>
       <thead>
         <tr>
           <th>Title</th>
@@ -12,7 +44,6 @@ function MusicTable({ songs }) {
           <th>Genre</th>
           <th>Release Date</th>
           <th>Running Time</th>
-          <th>Likes</th>
         </tr>
       </thead>
       <tbody>
@@ -24,7 +55,6 @@ function MusicTable({ songs }) {
             <td>{song.genre}</td>
             <td>{song.release_date}</td>
             <td>{song.running_time}</td>
-            <td>{song.likes}</td>
           </tr>
         ))}
       </tbody>

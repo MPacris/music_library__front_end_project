@@ -1,0 +1,19 @@
+.music-table {
+
+    padding: 5%;
+    border: 1px solid black;
+    border-collapse: collapse;
+
+  }
+  
+  .music-table th {
+    font-weight: bold;
+    font-size: .50 em;
+    text-align: left;
+  }
+  
+  .music-table th,
+  .music-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;}

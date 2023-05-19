@@ -1,0 +1,10 @@
+.seacrh-bar-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+.search-bar {
+    width: 100%;
+}

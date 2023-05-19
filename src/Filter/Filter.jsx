@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Filter.css'
 
 function Filter({ onFilter }) {
   const [filterType, setFilterType] = useState('');
@@ -10,7 +11,7 @@ function Filter({ onFilter }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='filter-section'>
       <select value={filterType} onChange={(event) => setFilterType(event.target.value)}>
         <option value="">Select Filter Type</option>
         <option value="album">Album</option>
