@@ -58,7 +58,7 @@ function MusicTable({ songs }) {
             <th>Artist</th>
             <th>Genre</th>
             <th>Release Date</th>
-            <th>Running Time (seconds)</th>
+            <th>R.T. (seconds)</th>
             <th>Likes</th>
             <th>Edit</th>
             <th>Delete</th>

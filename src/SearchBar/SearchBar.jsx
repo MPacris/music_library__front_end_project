@@ -17,7 +17,7 @@ function SearchBar({ onSearch, onCancelSearch }) {
 
   return (
     <form onSubmit={handleSubmit} className='search-bar-section'>
-      <h3>SearchBar</h3>
+      <h3>Search Bar</h3>
       <input
         type="text"
         placeholder="Search..."
@@ -25,8 +25,10 @@ function SearchBar({ onSearch, onCancelSearch }) {
         onChange={(event) => setTerm(event.target.value)}
         className='search-bar'
       />
+      <div className='search-bar-buttons'>
       <button type="submit">Search</button>
       <button type="button" onClick={handleCancel}>Clear</button>
+      </div>
     </form>
   );
 }

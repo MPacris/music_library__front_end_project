@@ -19,7 +19,7 @@ function Filter({ onFilter, onResetFilter }) {
 
   return (
     <form className='filter-section'>
-      <h3>Filter</h3>
+      <h3>Filter By</h3>
       <select value={filterType} onChange={(event) => setFilterType(event.target.value)}>
         <option value="">Select Filter Type</option>
         <option value="album">Album</option>
