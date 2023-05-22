@@ -22,12 +22,15 @@ function MusicTable({ songs }) {
     setSelectedSong(song);
   }
 
-  async function handleDelete(songId) {
-    try {
-      await axios.delete(`http://127.0.0.1:5000/api/songs/${songId}`);
-      setSelectedSong(null);
-    } catch (error) {
-      console.log('Error in delete song API call!', error);
+  async function handleDelete(songId, songName, artistName) {
+    const confirmDelete = window.confirm(`Are you sure you want to delete "${songName}" by ${artistName}?`);
+    if (confirmDelete) {
+      try {
+        await axios.delete(`http://127.0.0.1:5000/api/songs/${songId}`);
+        setSelectedSong(null);
+      } catch (error) {
+        console.log('Error in delete song API call!', error);
+      }
     }
   }
 
@@ -75,7 +78,7 @@ function MusicTable({ songs }) {
                 <button onClick={() => handleUpdate(song)}>Edit</button>
               </td>
               <td>
-                <button onClick={() => handleDelete(song.id)}>Delete</button>
+                <button onClick={() => handleDelete(song.id, song.title, song.artist)}>Delete</button>
               </td>
             </tr>
           ))}
