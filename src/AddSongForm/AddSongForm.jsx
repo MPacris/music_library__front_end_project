@@ -89,7 +89,7 @@ function AddSongForm({ onAddSong }) {
         onChange={(event) => setRunningTime(event.target.value)}
       />
       <button type="submit">Add Song</button>
-      <button type="button" onClick={handleCancel}>Clear</button>
+      <button type="button" onClick={handleCancel}>Cancel</button>
     </form>
   );
 }
