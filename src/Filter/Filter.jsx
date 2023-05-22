@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Filter.css'
+import './Filter.css';
 
-function Filter({ onFilter }) {
+function Filter({ onFilter, onResetFilter }) {
   const [filterType, setFilterType] = useState('');
   const [filterValue, setFilterValue] = useState('');
 
@@ -10,8 +10,15 @@ function Filter({ onFilter }) {
     onFilter(filterType, filterValue);
   }
 
+  function handleReset(event) {
+    event.preventDefault();
+    setFilterType('');
+    setFilterValue('');
+    onResetFilter();
+  }
+
   return (
-    <form onSubmit={handleSubmit} className='filter-section'>
+    <form className='filter-section'>
       <h3>Filter</h3>
       <select value={filterType} onChange={(event) => setFilterType(event.target.value)}>
         <option value="">Select Filter Type</option>
@@ -28,7 +35,10 @@ function Filter({ onFilter }) {
         onChange={(event) => setFilterValue(event.target.value)}
         required
       />
-      <button type="submit">Apply Filter</button>
+      <div>
+        <button type="submit" onClick={handleSubmit}>Apply Filter</button>
+        <button type="button" onClick={handleReset}>Reset Filter</button>
+      </div>
     </form>
   );
 }

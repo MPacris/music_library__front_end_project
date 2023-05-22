@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchBar.css'
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch, onCancelSearch }) {
   const [term, setTerm] = useState('');
 
   function handleSubmit(event) {
@@ -9,8 +9,14 @@ function SearchBar({ onSearch }) {
     onSearch(term);
   }
 
+  function handleCancel(event) {
+    event.preventDefault();
+    setTerm('');
+    onCancelSearch();
+  }
+
   return (
-    <form onSubmit={handleSubmit} className='search-bar-sectioon'>
+    <form onSubmit={handleSubmit} className='search-bar-section'>
       <h3>SearchBar</h3>
       <input
         type="text"
@@ -20,6 +26,7 @@ function SearchBar({ onSearch }) {
         className='search-bar'
       />
       <button type="submit">Search</button>
+      <button type="button" onClick={handleCancel}>Clear</button>
     </form>
   );
 }

@@ -4,8 +4,8 @@ import MusicTable from './MusicTable/MusicTable';
 import SearchBar from './SearchBar/SearchBar';
 import Filter from './Filter/Filter';
 import AddSongForm from './AddSongForm/AddSongForm';
-import './App.css'
-import './MusicTable/MusicTable.css'
+import './App.css';
+import './MusicTable/MusicTable.css';
 
 function App() {
   const [songs, setSongs] = useState([]);
@@ -40,6 +40,10 @@ function App() {
     setFilteredSongs(filtered);
   }
 
+  function handleCancelSearch() {
+    setFilteredSongs(songs);
+  }
+
   function handleFilter(filterType, filterValue) {
     const filtered = songs.filter((song) => {
       const lowerCaseFilterValue = filterValue.toLowerCase();
@@ -62,11 +66,15 @@ function App() {
     setFilteredSongs(filtered);
   }
 
+  function handleResetFilter() {
+    setFilteredSongs(songs);
+  }
+
   async function addSong(songData) {
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/songs', songData);
       setSongs([...songs, response.data.song]);
-      setFilteredSongs([...filteredSongs, response.data.song]);  //put in so that if I was filtering I can still add from that page
+      setFilteredSongs([...filteredSongs, response.data.song]);
     } catch (ex) {
       console.log('Error in addSong API call!');
     }
@@ -76,34 +84,25 @@ function App() {
     <div className='container-all'>
       <h1 className='header'>Music Library</h1>
 
-    <div className='action-container'>
+      <div className='action-container'>
+        <div className='search-bar'>
+          <SearchBar onSearch={handleSearch} onCancelSearch={handleCancelSearch} />
+        </div>
 
-      <div className='search-bar' >
-      <SearchBar onSearch={handleSearch} />
+        <div className='filter-section'>
+          <Filter onFilter={handleFilter} onResetFilter={handleResetFilter} />
+        </div>
+
+        <div className='add-song-form'>
+          <AddSongForm onAddSong={addSong} />
+        </div>
       </div>
-
-      <div className='filter-section'>
-      <Filter onFilter={handleFilter} />
-      </div>
-
-      <div className='add-song-form' >
-      <AddSongForm onAddSong={addSong} />
-      </div>
-    </div>
-
-    
 
       <div className='table-container'>
-      <MusicTable songs={filteredSongs} />
+        <MusicTable songs={filteredSongs} />
       </div>
     </div>
-   
   );
 }
 
 export default App;
-
-
-
-
-
