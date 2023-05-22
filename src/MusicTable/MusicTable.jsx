@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import UpdateSongModal from '../UpdateSongModal/UpdateSongModal';
-
 
 function MusicTable({ songs }) {
   const [selectedSong, setSelectedSong] = useState(null);
 
   function handleUpdate(song) {
     setSelectedSong(song);
+  }
+
+  async function handleDelete(songId) {
+    try {
+      await axios.delete(`http://127.0.0.1:5000/api/songs/${songId}`);
+      setSelectedSong(null);
+    } catch (error) {
+      console.log('Error in delete song API call!', error);
+    }
   }
 
   function handleCloseModal() {
@@ -26,7 +35,8 @@ function MusicTable({ songs }) {
             <th>Release Date</th>
             <th>Running Time</th>
             <th>Likes</th>
-            <th>Action</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +50,9 @@ function MusicTable({ songs }) {
               <td>{song.running_time}</td>
               <td>{song.likes}</td>
               <td>
-                <button onClick={() => handleUpdate(song)}>Edit</button>
+                <button onClick={() => handleUpdate(song)}>Edit</button> </td>
+              <td>
+                <button onClick={() => handleDelete(song.id)}>Delete</button>
               </td>
             </tr>
           ))}
