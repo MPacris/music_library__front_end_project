@@ -5,7 +5,7 @@ import SearchBar from './SearchBar/SearchBar';
 import Filter from './Filter/Filter';
 import AddSongForm from './AddSongForm/AddSongForm';
 import './App.css';
-import './MusicTable/MusicTable.css';
+
 
 function App() {
   const [songs, setSongs] = useState([]);
@@ -33,8 +33,7 @@ function App() {
         song.album.toLowerCase().includes(searchTerm) ||
         song.artist.toLowerCase().includes(searchTerm) ||
         song.genre.toLowerCase().includes(searchTerm) ||
-        song.release_date.toLowerCase().includes(searchTerm) ||
-        (typeof song.running_time === 'string' && song.running_time.toLowerCase().includes(searchTerm))
+        song.release_date.toLowerCase().includes(searchTerm)
       );
     });
     setFilteredSongs(filtered);

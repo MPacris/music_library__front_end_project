@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UpdateSongModal from '../UpdateSongModal/UpdateSongModal';
+import './MusicTable.css';
 
 function MusicTable({ songs }) {
   const [selectedSong, setSelectedSong] = useState(null);
   const [totalRunningTime, setTotalRunningTime] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     function calculateTotalRunningTime() {
@@ -20,22 +22,30 @@ function MusicTable({ songs }) {
 
   function handleUpdate(song) {
     setSelectedSong(song);
-  }
-
-  async function handleDelete(songId, songName, artistName) {
-    const confirmDelete = window.confirm(`Are you sure you want to delete "${songName}" by ${artistName}?`);
-    if (confirmDelete) {
-      try {
-        await axios.delete(`http://127.0.0.1:5000/api/songs/${songId}`);
-        setSelectedSong(null);
-      } catch (error) {
-        console.log('Error in delete song API call!', error);
-      }
-    }
+    setIsModalOpen(true);
   }
 
   function handleCloseModal() {
     setSelectedSong(null);
+    setIsModalOpen(false);
+  }
+
+  function handleCancel() {
+    handleCloseModal();
+  }
+
+  function handleDelete(songId, songName, artistName) {
+    const confirmDelete = window.confirm(`Are you sure you want to delete "${songName}" by ${artistName}?`);
+    if (confirmDelete) {
+      try {
+        axios.delete(`http://127.0.0.1:5000/api/songs/${songId}`).then(() => {
+          setSelectedSong(null);
+          fetchData(); // Refresh data after deletion
+        });
+      } catch (error) {
+        console.log('Error in delete song API call!', error);
+      }
+    }
   }
 
   function formatTime(timeInSeconds) {
@@ -44,12 +54,29 @@ function MusicTable({ songs }) {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
+  async function fetchData() {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/songs');
+      setSelectedSong(response.data.songs);
+    } catch (ex) {
+      console.log('Error in fetchData API call!');
+    }
+  }
+
   return (
-    <div className='bottom-container'>
+    <div className="bottom-container">
       <h3>Music Library</h3>
       <div className="running-time-summary">
         Total Running Time: {formatTime(totalRunningTime)} minutes
       </div>
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleCloseModal}>&times;</span>
+            <UpdateSongModal song={selectedSong} onUpdate={handleCloseModal} onCancel={handleCancel} />
+          </div>
+        </div>
+      )}
       <table className="music-table">
         <thead>
           <tr>
@@ -84,12 +111,6 @@ function MusicTable({ songs }) {
           ))}
         </tbody>
       </table>
-      {selectedSong && (
-        <UpdateSongModal
-          song={selectedSong}
-          onUpdate={handleCloseModal}
-        />
-      )}
     </div>
   );
 }
